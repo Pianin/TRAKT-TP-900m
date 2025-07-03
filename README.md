@@ -8,7 +8,7 @@ Zabbix server version 6.0 or higher.
 
 ## Tested version
 
-Not yet? But ToDo.
+Not yet. But ToDo.
 
 ### Macros used
 
