@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>6.0</version>
-    <date>2025-07-02T11:38:46Z</date>
+    <date>2025-07-15T19:52:51Z</date>
     <groups>
         <group>
             <uuid>eb3dfc43ee4345a6b8f93bffd6172bf1</uuid>
@@ -15,8 +15,8 @@
     <templates>
         <template>
             <uuid>ae670d2f90144004b1938d4938764ebc</uuid>
-            <template>TP-900M API</template>
-            <name>TP-900M API</name>
+            <template>TR-900M API</template>
+            <name>TR-900M API</name>
             <templates>
                 <template>
                     <name>ICMP Ping</name>
@@ -51,7 +51,7 @@
                     <triggers>
                         <trigger>
                             <uuid>60a60f91d8b54b70a1d89caf4c740ced</uuid>
-                            <expression>last(/TP-900M API/net.tcp.service[http,,8919],#2)=0</expression>
+                            <expression>last(/TR-900M API/net.tcp.service[http,,8919],#2)=0</expression>
                             <name>HTTP port is NOT avilable</name>
                             <priority>HIGH</priority>
                             <description>If two consecutive checks fail, a trigger is triggered.</description>
@@ -103,7 +103,7 @@
                     <triggers>
                         <trigger>
                             <uuid>4d2d0c05237b4af7b9ede7c95a21605a</uuid>
-                            <expression>last(/TP-900M API/tp.aes.state)&lt;&gt;{$AESIN_STATE}</expression>
+                            <expression>last(/TR-900M API/tp.aes.state)&lt;&gt;{$AESIN_STATE}</expression>
                             <name>AES input state IS WRONG</name>
                             <priority>WARNING</priority>
                             <description>Checking the state of the AES input for equality to the {$AESIN_STATE} macro. By default, we expect TRUE</description>
@@ -155,7 +155,7 @@
                     <triggers>
                         <trigger>
                             <uuid>5206e465e38243ce8619850d7fa5d6ca</uuid>
-                            <expression>last(/TP-900M API/tp.analog.state)&lt;&gt;{$ANALOGIN_STATE}</expression>
+                            <expression>last(/TR-900M API/tp.analog.state)&lt;&gt;{$ANALOGIN_STATE}</expression>
                             <name>Analog input state IS WRONG</name>
                             <priority>WARNING</priority>
                             <description>Checking the state of the AES input for equality to the {$ANALOGIN_STATE} macro. By default, we expect TRUE</description>
@@ -184,14 +184,14 @@
                             <type>STR_REPLACE</type>
                             <parameters>
                                 <parameter>Ok</parameter>
-                                <parameter>1</parameter>
+                                <parameter>0</parameter>
                             </parameters>
                         </step>
                         <step>
                             <type>STR_REPLACE</type>
                             <parameters>
                                 <parameter>Fail</parameter>
-                                <parameter>0</parameter>
+                                <parameter>1</parameter>
                             </parameters>
                         </step>
                         <step>
@@ -214,7 +214,7 @@
                     <triggers>
                         <trigger>
                             <uuid>f1602c042283445bb8fd7c04cbae039d</uuid>
-                            <expression>last(/TP-900M API/tp.conn.servera.constate)=1</expression>
+                            <expression>last(/TR-900M API/tp.conn.servera.constate)=1</expression>
                             <name>Connection state ServerA IS FAILED</name>
                             <priority>WARNING</priority>
                             <description>Checking the connection status of Server A</description>
@@ -243,14 +243,14 @@
                             <type>STR_REPLACE</type>
                             <parameters>
                                 <parameter>Ok</parameter>
-                                <parameter>1</parameter>
+                                <parameter>0</parameter>
                             </parameters>
                         </step>
                         <step>
                             <type>STR_REPLACE</type>
                             <parameters>
                                 <parameter>Fail</parameter>
-                                <parameter>0</parameter>
+                                <parameter>1</parameter>
                             </parameters>
                         </step>
                         <step>
@@ -273,7 +273,7 @@
                     <triggers>
                         <trigger>
                             <uuid>fe9b43ba2111423686ac54b696ce9279</uuid>
-                            <expression>last(/TP-900M API/tp.conn.servera.dbonstate)=1</expression>
+                            <expression>last(/TR-900M API/tp.conn.servera.dbonstate)=1</expression>
                             <name>DB Connection state ServerA IS FAILED</name>
                             <priority>WARNING</priority>
                             <description>Checking the DB connection status for Server A</description>
@@ -302,14 +302,14 @@
                             <type>STR_REPLACE</type>
                             <parameters>
                                 <parameter>Ok</parameter>
-                                <parameter>1</parameter>
+                                <parameter>0</parameter>
                             </parameters>
                         </step>
                         <step>
                             <type>STR_REPLACE</type>
                             <parameters>
                                 <parameter>Fail</parameter>
-                                <parameter>0</parameter>
+                                <parameter>1</parameter>
                             </parameters>
                         </step>
                         <step>
@@ -376,6 +376,13 @@
                                 <parameter>3</parameter>
                             </parameters>
                         </step>
+                        <step>
+                            <type>STR_REPLACE</type>
+                            <parameters>
+                                <parameter>Undefined</parameter>
+                                <parameter>4</parameter>
+                            </parameters>
+                        </step>
                     </preprocessing>
                     <master_item>
                         <key>tp.system.status</key>
@@ -389,7 +396,7 @@
                     <triggers>
                         <trigger>
                             <uuid>a02bbf24cabc42f59ab9f753e1a25f1d</uuid>
-                            <expression>last(/TP-900M API/tp.conn.servera.redundancy.state)&lt;&gt;{$REDU_STATUS_SA}</expression>
+                            <expression>last(/TR-900M API/tp.conn.servera.redundancy.state)&lt;&gt;{$REDU_STATUS_SA}</expression>
                             <name>Redundancy state ServerA IS WRONG</name>
                             <priority>WARNING</priority>
                             <description>Redundancy status for ServerA</description>
@@ -448,7 +455,7 @@
                     <triggers>
                         <trigger>
                             <uuid>4e0d8653959e42c8aa209270aeb28ae3</uuid>
-                            <expression>last(/TP-900M API/tp.conn.serverb.constate)=1</expression>
+                            <expression>last(/TR-900M API/tp.conn.serverb.constate)=1</expression>
                             <name>Connection state ServerB IS FAILED</name>
                             <priority>WARNING</priority>
                             <description>Checking the connection status of Server B</description>
@@ -477,14 +484,14 @@
                             <type>STR_REPLACE</type>
                             <parameters>
                                 <parameter>Ok</parameter>
-                                <parameter>1</parameter>
+                                <parameter>0</parameter>
                             </parameters>
                         </step>
                         <step>
                             <type>STR_REPLACE</type>
                             <parameters>
                                 <parameter>Fail</parameter>
-                                <parameter>0</parameter>
+                                <parameter>1</parameter>
                             </parameters>
                         </step>
                         <step>
@@ -507,7 +514,7 @@
                     <triggers>
                         <trigger>
                             <uuid>61c26a59654346db9649cddf80f152db</uuid>
-                            <expression>last(/TP-900M API/tp.conn.serverb.dbonstate)=1</expression>
+                            <expression>last(/TR-900M API/tp.conn.serverb.dbonstate)=1</expression>
                             <name>DB Connection state ServerB  IS FAILED</name>
                             <priority>WARNING</priority>
                             <description>Checking the DB connection status for Server B</description>
@@ -604,10 +611,17 @@
                             </parameters>
                         </step>
                         <step>
-                            <type>REGEX</type>
+                            <type>STR_REPLACE</type>
                             <parameters>
                                 <parameter>Invalid</parameter>
                                 <parameter>3</parameter>
+                            </parameters>
+                        </step>
+                        <step>
+                            <type>STR_REPLACE</type>
+                            <parameters>
+                                <parameter>Undefined</parameter>
+                                <parameter>4</parameter>
                             </parameters>
                         </step>
                     </preprocessing>
@@ -623,7 +637,7 @@
                     <triggers>
                         <trigger>
                             <uuid>54e1520e573d445f9e665a131a879357</uuid>
-                            <expression>last(/TP-900M API/tp.conn.serverb.redundancy.state)&lt;&gt;{$REDU_STATUS_SB}</expression>
+                            <expression>last(/TR-900M API/tp.conn.serverb.redundancy.state)&lt;&gt;{$REDU_STATUS_SB}</expression>
                             <name>Redundancy state ServerB IS WRONG</name>
                             <priority>WARNING</priority>
                             <description>Redundancy status for ServerB</description>
@@ -675,7 +689,7 @@
                     <triggers>
                         <trigger>
                             <uuid>e842afaaaab4480fa62a1b14ef12e72d</uuid>
-                            <expression>last(/TP-900M API/tp.fmtuner.pilottone1)=0</expression>
+                            <expression>last(/TR-900M API/tp.fmtuner.pilottone1)=0</expression>
                             <name>FM1 Pilot-tone status IS FALSE</name>
                             <priority>WARNING</priority>
                             <description>Checking the status of the Pilot-tone 1 channel FM receiver</description>
@@ -727,7 +741,7 @@
                     <triggers>
                         <trigger>
                             <uuid>3aed80d78fe94ebdacc760397889a664</uuid>
-                            <expression>last(/TP-900M API/tp.fmtuner.pilottone2)=0</expression>
+                            <expression>last(/TR-900M API/tp.fmtuner.pilottone2)=0</expression>
                             <name>FM2 Pilot-tone status IS FALSE</name>
                             <priority>WARNING</priority>
                             <description>Checking the status of the Pilot-tone 2 channel FM receiver</description>
@@ -756,14 +770,14 @@
                             <type>STR_REPLACE</type>
                             <parameters>
                                 <parameter>Ok</parameter>
-                                <parameter>1</parameter>
+                                <parameter>0</parameter>
                             </parameters>
                         </step>
                         <step>
                             <type>STR_REPLACE</type>
                             <parameters>
                                 <parameter>Fail</parameter>
-                                <parameter>0</parameter>
+                                <parameter>1</parameter>
                             </parameters>
                         </step>
                         <step>
@@ -806,14 +820,14 @@
                             <type>STR_REPLACE</type>
                             <parameters>
                                 <parameter>Ok</parameter>
-                                <parameter>1</parameter>
+                                <parameter>0</parameter>
                             </parameters>
                         </step>
                         <step>
                             <type>STR_REPLACE</type>
                             <parameters>
                                 <parameter>Fail</parameter>
-                                <parameter>0</parameter>
+                                <parameter>1</parameter>
                             </parameters>
                         </step>
                         <step>
@@ -856,14 +870,14 @@
                             <type>STR_REPLACE</type>
                             <parameters>
                                 <parameter>Ok</parameter>
-                                <parameter>1</parameter>
+                                <parameter>0</parameter>
                             </parameters>
                         </step>
                         <step>
                             <type>STR_REPLACE</type>
                             <parameters>
                                 <parameter>Fail</parameter>
-                                <parameter>0</parameter>
+                                <parameter>1</parameter>
                             </parameters>
                         </step>
                         <step>
@@ -906,14 +920,14 @@
                             <type>STR_REPLACE</type>
                             <parameters>
                                 <parameter>Ok</parameter>
-                                <parameter>1</parameter>
+                                <parameter>0</parameter>
                             </parameters>
                         </step>
                         <step>
                             <type>STR_REPLACE</type>
                             <parameters>
                                 <parameter>Fail</parameter>
-                                <parameter>0</parameter>
+                                <parameter>1</parameter>
                             </parameters>
                         </step>
                         <step>
@@ -948,6 +962,12 @@
                             <type>JSONPATH</type>
                             <parameters>
                                 <parameter>$.MpxState.Level</parameter>
+                            </parameters>
+                        </step>
+                        <step>
+                            <type>JAVASCRIPT</type>
+                            <parameters>
+                                <parameter>return (Math.trunc(value* 100) / 100);</parameter>
                             </parameters>
                         </step>
                     </preprocessing>
@@ -996,7 +1016,7 @@
                         <step>
                             <type>STR_REPLACE</type>
                             <parameters>
-                                <parameter>Man</parameter>
+                                <parameter>Manual</parameter>
                                 <parameter>2</parameter>
                             </parameters>
                         </step>
@@ -1013,7 +1033,7 @@
                     <triggers>
                         <trigger>
                             <uuid>2ddfc1a62f0c487f91ca4cb9bc0ccf6d</uuid>
-                            <expression>last(/TP-900M API/tp.player.mode)&lt;&gt;{$PLAYERMODE_STATE}</expression>
+                            <expression>last(/TR-900M API/tp.player.mode)&lt;&gt;{$PLAYERMODE_STATE}</expression>
                             <name>Player status mode IS WRONG</name>
                             <priority>AVERAGE</priority>
                             <description>Checking the player's status for a match with the {$PLAYERMODE_STATE} macro</description>
@@ -1065,7 +1085,7 @@
                     <triggers>
                         <trigger>
                             <uuid>65005e9b143e4c76a3f98c88add7c79f</uuid>
-                            <expression>last(/TP-900M API/tp.player.state)=0</expression>
+                            <expression>last(/TR-900M API/tp.player.state)=0</expression>
                             <name>Player status isPlaing IS FALSE</name>
                             <priority>AVERAGE</priority>
                             <description>Checking the isPlaying status for the player</description>
@@ -1102,7 +1122,7 @@
                 </item>
                 <item>
                     <uuid>4d53316c27f94bbc92020f86beafdbc1</uuid>
-                    <name>Sheduler state today autobloks</name>
+                    <name>Scheduler state today autobloks</name>
                     <type>DEPENDENT</type>
                     <key>tp.sheduler.toautobloks</key>
                     <delay>0</delay>
@@ -1139,13 +1159,13 @@
                     <tags>
                         <tag>
                             <tag>component</tag>
-                            <value>Sheduler</value>
+                            <value>Sсheduler</value>
                         </tag>
                     </tags>
                 </item>
                 <item>
                     <uuid>032e84950aed464d87e8e4b11e88a1a3</uuid>
-                    <name>Sheduler state tomorrow files problem</name>
+                    <name>Scheduler state tomorrow files problem</name>
                     <type>DEPENDENT</type>
                     <key>tp.sheduler.tomprobfiles</key>
                     <delay>0</delay>
@@ -1166,13 +1186,13 @@
                     <tags>
                         <tag>
                             <tag>component</tag>
-                            <value>Sheduler</value>
+                            <value>Sсheduler</value>
                         </tag>
                     </tags>
                 </item>
                 <item>
                     <uuid>273ea75011d647a79db84563693146d4</uuid>
-                    <name>Sheduler state today files problem</name>
+                    <name>Scheduler state today files problem</name>
                     <type>DEPENDENT</type>
                     <key>tp.sheduler.toprobfiles</key>
                     <delay>0</delay>
@@ -1193,7 +1213,7 @@
                     <tags>
                         <tag>
                             <tag>component</tag>
-                            <value>Sheduler</value>
+                            <value>Sсheduler</value>
                         </tag>
                     </tags>
                 </item>
@@ -1274,7 +1294,7 @@
                     <triggers>
                         <trigger>
                             <uuid>c799627e1fda4e799c9525e03d6d3324</uuid>
-                            <expression>last(/TP-900M API/tp.system.cpu.state,#5)=1</expression>
+                            <expression>last(/TR-900M API/tp.system.cpu.state,#5)=1</expression>
                             <name>CPU Load state IS OVERLOAD last 5 times</name>
                             <priority>AVERAGE</priority>
                             <description>Checking the CPU load status over the last 5 measurements in order to reduce false positives</description>
@@ -1308,6 +1328,20 @@
                             <value>CPU</value>
                         </tag>
                     </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>607d86d089ae4b40b647387cfec40926</uuid>
+                            <expression>last(/TR-900M API/tp.system.cpu.temp,#5)&gt;{$TR_TEMP_CRIT_CPU}</expression>
+                            <name>CPU temperature is higher then {$TR_TEMP_CRIT_CPU}</name>
+                            <priority>AVERAGE</priority>
+                        </trigger>
+                        <trigger>
+                            <uuid>ea40f5f3d666440c9596be698ec33ef4</uuid>
+                            <expression>last(/TR-900M API/tp.system.cpu.temp,#5)&gt;{$TR_TEMP_WARN_CPU}</expression>
+                            <name>CPU temperature is higher then {$TR_TEMP_WARN_CPU}</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <uuid>a6ceccab5ba84fcab8f8795d9e380940</uuid>
@@ -1358,10 +1392,10 @@
                     <triggers>
                         <trigger>
                             <uuid>a81f85fb98074ea99a11f48ee179ba5f</uuid>
-                            <expression>last(/TP-900M API/tp.system.cpu.temp.state)=1</expression>
+                            <expression>last(/TR-900M API/tp.system.cpu.temp.state)=1</expression>
                             <name>CPU Temp state IS OVERHEATING</name>
                             <priority>HIGH</priority>
-                            <description>Checking the CPU temperature status</description>
+                            <description>Checking the processor temperature status. Triggered when 110 degrees Celsius is exceeded</description>
                         </trigger>
                     </triggers>
                 </item>
@@ -1395,7 +1429,7 @@
                     <triggers>
                         <trigger>
                             <uuid>6af886c83bcb4e76b53c5e0f4ef796ac</uuid>
-                            <expression>last(/TP-900M API/tp.system.fmpreset.name)&lt;&gt;&quot;{$FMPRESET_NAME)&quot;</expression>
+                            <expression>last(/TR-900M API/tp.system.fmpreset.name)&lt;&gt;{$FMPRESET_NAME}</expression>
                             <name>FM processing preset name IS WRONG</name>
                             <priority>INFO</priority>
                             <description>Checking the correctness of the preset used for FM processing</description>
@@ -1447,7 +1481,7 @@
                     <triggers>
                         <trigger>
                             <uuid>e12b658a88a345578a470817cf41f7ad</uuid>
-                            <expression>last(/TP-900M API/tp.system.fmproc.state)=1</expression>
+                            <expression>last(/TR-900M API/tp.system.fmproc.state)=0</expression>
                             <name>FM processing operation state IS FALSE</name>
                             <priority>WARNING</priority>
                             <description>Checking the operation status of FM Processing</description>
@@ -1506,7 +1540,7 @@
                     <triggers>
                         <trigger>
                             <uuid>0dd286d837a84b70911e877426a0b782</uuid>
-                            <expression>last(/TP-900M API/tp.system.general.state)=1</expression>
+                            <expression>last(/TR-900M API/tp.system.general.state)=1</expression>
                             <name>General condition IS FAIL</name>
                             <priority>AVERAGE</priority>
                             <description>Checking the overall health of the system</description>
@@ -1540,6 +1574,20 @@
                             <value>GPU</value>
                         </tag>
                     </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>a71b8c4dbadc4790b0077b113c081140</uuid>
+                            <expression>last(/TR-900M API/tp.system.gpu.temp,#5)&gt;{$TR_TEMP_CRIT_GPU}</expression>
+                            <name>GPU temperature is higher then {$TR_TEMP_CRIT_GPU}</name>
+                            <priority>AVERAGE</priority>
+                        </trigger>
+                        <trigger>
+                            <uuid>4ef077e969f64a7c9906925ae04ca103</uuid>
+                            <expression>last(/TR-900M API/tp.system.gpu.temp,#5)&gt;{$TR_TEMP_WARN_CPU}</expression>
+                            <name>GPU temperature is higher then {$TR_TEMP_WARN_GPU}</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <uuid>09900052e6c64d94b85b50b5abe922dd</uuid>
@@ -1590,10 +1638,10 @@
                     <triggers>
                         <trigger>
                             <uuid>6805ea971887495cac149f4df36225a5</uuid>
-                            <expression>last(/TP-900M API/tp.system.gpu.temp.state)=1</expression>
+                            <expression>last(/TR-900M API/tp.system.gpu.temp.state)=1</expression>
                             <name>GPU Temp state IS OVERHEATING</name>
                             <priority>AVERAGE</priority>
-                            <description>Checking the GPU overheating status</description>
+                            <description>Checking the GPU temperature status. Triggered when 110 degrees Celsius is exceeded</description>
                         </trigger>
                     </triggers>
                 </item>
@@ -1674,7 +1722,7 @@
                     <triggers>
                         <trigger>
                             <uuid>5a4da5c4e6c547cc9f476798d60cc983</uuid>
-                            <expression>last(/TP-900M API/tp.system.ram.load.state,#5)=1</expression>
+                            <expression>last(/TR-900M API/tp.system.ram.load.state,#5)=1</expression>
                             <name>RAM Load state IS HIGHLOADING last 5 times</name>
                             <priority>WARNING</priority>
                             <description>Checking the state of RAM congestion over the last 5 measurements in order to reduce false positives</description>
@@ -1708,6 +1756,20 @@
                             <value>Volume</value>
                         </tag>
                     </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>8e48ee52a69144918457d15a8a13f676</uuid>
+                            <expression>last(/TR-900M API/tp.system.root.capa)&gt;={$TR_ROOT_CAP_CRIT}</expression>
+                            <name>Root volume capacity is higher then {$TR_ROOT_CAP_CRIT}</name>
+                            <priority>AVERAGE</priority>
+                        </trigger>
+                        <trigger>
+                            <uuid>36c5edc7a7e1497eb28dc4f1d0cd1635</uuid>
+                            <expression>last(/TR-900M API/tp.system.root.capa)&gt;={$TR_ROOT_CAP_WARN}</expression>
+                            <name>Root volume capacity is higher then {$TR_ROOT_CAP_WARN}</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <uuid>11f2c39d3cf04293a4e103c19d7cbd14</uuid>
@@ -1758,7 +1820,7 @@
                     <triggers>
                         <trigger>
                             <uuid>5ec7e5cca4b7450e921eda63100cb22a</uuid>
-                            <expression>last(/TP-900M API/tp.system.root.capa.state)=1</expression>
+                            <expression>last(/TR-900M API/tp.system.root.capa.state)=1</expression>
                             <name>Root volume capacity state IS HighLoading</name>
                             <priority>WARNING</priority>
                             <description>Checking the fullness status of the root volume (/)</description>
@@ -1792,6 +1854,20 @@
                             <value>SSD</value>
                         </tag>
                     </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>9a25b9d834b8453284adcc3cceb350fd</uuid>
+                            <expression>last(/TR-900M API/tp.system.ssd.capa)&gt;={$TR_SSD_CAP_CRIT}</expression>
+                            <name>SSD capacity is highest then {$TR_SSD_CAP_CRIT}</name>
+                            <priority>AVERAGE</priority>
+                        </trigger>
+                        <trigger>
+                            <uuid>e3df9576aaa64b6ca8b5b21e9ae9a588</uuid>
+                            <expression>last(/TR-900M API/tp.system.ssd.capa)&gt;={$TR_SSD_CAP_WARN}</expression>
+                            <name>SSD capacity is highest then {$TR_SSD_CAP_WARN}</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
                 </item>
                 <item>
                     <uuid>d3c857f9b026408c8d9a270fdfb466c0</uuid>
@@ -1842,7 +1918,7 @@
                     <triggers>
                         <trigger>
                             <uuid>e1b8d73069db402e9f457d6c615cd560</uuid>
-                            <expression>last(/TP-900M API/tp.system.ssd.capa.state)=1</expression>
+                            <expression>last(/TR-900M API/tp.system.ssd.capa.state)=1</expression>
                             <name>SSD capacity state IS HighLoading</name>
                             <priority>WARNING</priority>
                             <description>Checking the SSD occupancy status</description>
@@ -1868,7 +1944,7 @@
                     <triggers>
                         <trigger>
                             <uuid>66c5a52470994d28850391ba3c18994b</uuid>
-                            <expression>nodata(/TP-900M API/tp.system.status,5m)=1</expression>
+                            <expression>nodata(/TR-900M API/tp.system.status,5m)=1</expression>
                             <name>Get system status NO DATA 5m</name>
                             <priority>WARNING</priority>
                             <description>Verifying data receipt</description>
@@ -1952,7 +2028,7 @@
                     <triggers>
                         <trigger>
                             <uuid>df7f8e07bfa04392810d4093f9f48b64</uuid>
-                            <expression>last(/TP-900M API/tp.system.swap.capa.state)=1</expression>
+                            <expression>last(/TR-900M API/tp.system.swap.capa.state)=1</expression>
                             <name>SWAP capacity state IS HighLoading</name>
                             <priority>WARNING</priority>
                             <description>Checking the status of SWAP occupancy</description>
@@ -1994,6 +2070,38 @@
                     <macro>{$REDU_STATUS_SB}</macro>
                     <value>1</value>
                     <description>Expected redundancy status for ServerB (Active)</description>
+                </macro>
+                <macro>
+                    <macro>{$TR_ROOT_CAP_CRIT}</macro>
+                    <value>90</value>
+                </macro>
+                <macro>
+                    <macro>{$TR_ROOT_CAP_WARN}</macro>
+                    <value>80</value>
+                </macro>
+                <macro>
+                    <macro>{$TR_SSD_CAP_CRIT}</macro>
+                    <value>90</value>
+                </macro>
+                <macro>
+                    <macro>{$TR_SSD_CAP_WARN}</macro>
+                    <value>80</value>
+                </macro>
+                <macro>
+                    <macro>{$TR_TEMP_CRIT_CPU}</macro>
+                    <value>70</value>
+                </macro>
+                <macro>
+                    <macro>{$TR_TEMP_CRIT_GPU}</macro>
+                    <value>70</value>
+                </macro>
+                <macro>
+                    <macro>{$TR_TEMP_WARN_CPU}</macro>
+                    <value>50</value>
+                </macro>
+                <macro>
+                    <macro>{$TR_TEMP_WARN_GPU}</macro>
+                    <value>50</value>
                 </macro>
             </macros>
             <valuemaps>
@@ -2080,6 +2188,10 @@
                         <mapping>
                             <value>3</value>
                             <newvalue>Invalid</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>4</value>
+                            <newvalue>Undefined</newvalue>
                         </mapping>
                     </mappings>
                 </valuemap>
