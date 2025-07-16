@@ -25,7 +25,7 @@ Not yet. But ToDo.
 |{$TR_ROOT_CAP_WARN}|<p>The value of the root partition filling warning (%)</p>|`80`|
 |{$TR_SSD_CAP_CRIT}|<p>The importance of critical SSD overflow (%)</p>|`90`|
 |{$TR_SSD_CAP_WARN}|<p>The value of the SSD overflow warning (%)</p>|`80`|
-|{$TR_TEMP_CRIT_CPU}|<p>Critical value of CPU temperature Celsuis</p>|`90`|
-|{$TR_TEMP_WARN_CPU}|<p>The value of the temperature warning about overheating of the CPU Celsuis</p>|`80`|
-|{$TR_TEMP_CRIT_GPU}|<p>Critical value of GPU temperature Celsuis</p>|`90`|
-|{$TR_TEMP_WARN_GPU}|<p>The value of the temperature warning about overheating of the GPU Celsuis</p>|`80`|
+|{$TR_TEMP_CRIT_CPU}|<p>Critical value of CPU temperature Celsuis</p>|`70`|
+|{$TR_TEMP_WARN_CPU}|<p>The value of the temperature warning about overheating of the CPU Celsuis</p>|`50`|
+|{$TR_TEMP_CRIT_GPU}|<p>Critical value of GPU temperature Celsuis</p>|`70`|
+|{$TR_TEMP_WARN_GPU}|<p>The value of the temperature warning about overheating of the GPU Celsuis</p>|`50`|
