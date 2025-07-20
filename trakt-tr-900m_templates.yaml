@@ -1,6 +1,6 @@
 zabbix_export:
   version: '6.0'
-  date: '2025-07-15T19:52:40Z'
+  date: '2025-07-20T18:44:53Z'
   groups:
     - uuid: eb3dfc43ee4345a6b8f93bffd6172bf1
       name: 'Broadcast FM'
@@ -33,10 +33,40 @@ zabbix_export:
               name: 'HTTP port is NOT avilable'
               priority: HIGH
               description: 'If two consecutive checks fail, a trigger is triggered.'
+        - uuid: fbbfd5fddb304fc4b8fa118dbe8f4f5d
+          name: 'HardKey state ServerB'
+          type: DEPENDENT
+          key: tp.conn.serverb.hdkey.state
+          delay: '0'
+          history: 30d
+          description: 'The status of the physical key for the DB service'
+          valuemap:
+            name: 'Common state'
+          preprocessing:
+            - type: JSONPATH
+              parameters:
+                - $.ConnectionState.ServerB.HardKeyState
+            - type: STR_REPLACE
+              parameters:
+                - Ok
+                - '1'
+            - type: STR_REPLACE
+              parameters:
+                - Fail
+                - '0'
+            - type: STR_REPLACE
+              parameters:
+                - Undefined
+                - '2'
+          master_item:
+            key: tr.system.status
+          tags:
+            - tag: component
+              value: ServerB
         - uuid: 986bf14a5332433796fede8850fe652d
           name: 'AES input state'
           type: DEPENDENT
-          key: tp.aes.state
+          key: tr.aes.state
           delay: '0'
           history: 30d
           description: 'The presence of a signal at the AES input'
@@ -55,20 +85,20 @@ zabbix_export:
                 - 'false'
                 - '0'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: AES
           triggers:
             - uuid: 4d2d0c05237b4af7b9ede7c95a21605a
-              expression: 'last(/TR-900M API/tp.aes.state)<>{$AESIN_STATE}'
+              expression: 'last(/TR-900M API/tr.aes.state)<>{$AESIN_STATE}'
               name: 'AES input state IS WRONG'
               priority: WARNING
               description: 'Checking the state of the AES input for equality to the {$AESIN_STATE} macro. By default, we expect TRUE'
         - uuid: e26328da1fa8455480def0ca9868bd33
           name: 'Analog input state'
           type: DEPENDENT
-          key: tp.analog.state
+          key: tr.analog.state
           delay: '0'
           history: 30d
           description: 'The presence of a signal at the analog input'
@@ -87,20 +117,20 @@ zabbix_export:
                 - 'false'
                 - '0'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: Analog
           triggers:
             - uuid: 5206e465e38243ce8619850d7fa5d6ca
-              expression: 'last(/TR-900M API/tp.analog.state)<>{$ANALOGIN_STATE}'
+              expression: 'last(/TR-900M API/tr.analog.state)<>{$ANALOGIN_STATE}'
               name: 'Analog input state IS WRONG'
               priority: WARNING
               description: 'Checking the state of the AES input for equality to the {$ANALOGIN_STATE} macro. By default, we expect TRUE'
         - uuid: 87b2f019d9744c3bbcd561cd2d64651a
           name: 'Connection state ServerA'
           type: DEPENDENT
-          key: tp.conn.servera.constate
+          key: tr.conn.servera.constate
           delay: '0'
           history: 30d
           description: 'Connection status to the DB service'
@@ -123,20 +153,20 @@ zabbix_export:
                 - Undefined
                 - '2'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: ServerA
           triggers:
             - uuid: f1602c042283445bb8fd7c04cbae039d
-              expression: 'last(/TR-900M API/tp.conn.servera.constate)=1'
+              expression: 'last(/TR-900M API/tr.conn.servera.constate)=1'
               name: 'Connection state ServerA IS FAILED'
               priority: WARNING
               description: 'Checking the connection status of Server A'
         - uuid: a5ee76b3c2374afeac0441ec421c7922
           name: 'DB Connection state ServerA'
           type: DEPENDENT
-          key: tp.conn.servera.dbonstate
+          key: tr.conn.servera.dbonstate
           delay: '0'
           history: 30d
           description: 'DB service connection status to MBD'
@@ -159,20 +189,20 @@ zabbix_export:
                 - Undefined
                 - '2'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: ServerA
           triggers:
             - uuid: fe9b43ba2111423686ac54b696ce9279
-              expression: 'last(/TR-900M API/tp.conn.servera.dbonstate)=1'
+              expression: 'last(/TR-900M API/tr.conn.servera.dbonstate)=1'
               name: 'DB Connection state ServerA IS FAILED'
               priority: WARNING
               description: 'Checking the DB connection status for Server A'
         - uuid: bd405f06daf14e23993ef7dcdad668b9
           name: 'HardKey state ServerA'
           type: DEPENDENT
-          key: tp.conn.servera.hdkey.state
+          key: tr.conn.servera.hdkey.state
           delay: '0'
           history: 30d
           description: 'The status of the physical key for the DB service'
@@ -195,14 +225,14 @@ zabbix_export:
                 - Undefined
                 - '2'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: ServerA
         - uuid: 2fc4bd07b4b6497398a4f6cd849db0f7
           name: 'Redundancy state ServerA'
           type: DEPENDENT
-          key: tp.conn.servera.redundancy.state
+          key: tr.conn.servera.redundancy.state
           delay: '0'
           history: 30d
           description: 'Redundancy status'
@@ -233,20 +263,20 @@ zabbix_export:
                 - Undefined
                 - '4'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: ServerA
           triggers:
             - uuid: a02bbf24cabc42f59ab9f753e1a25f1d
-              expression: 'last(/TR-900M API/tp.conn.servera.redundancy.state)<>{$REDU_STATUS_SA}'
+              expression: 'last(/TR-900M API/tr.conn.servera.redundancy.state)<>{$REDU_STATUS_SA}'
               name: 'Redundancy state ServerA IS WRONG'
               priority: WARNING
               description: 'Redundancy status for ServerA'
         - uuid: f2b51cd8ceec45ce8a753b0f8510bcf8
           name: 'Connection state ServerB'
           type: DEPENDENT
-          key: tp.conn.serverb.constate
+          key: tr.conn.serverb.constate
           delay: '0'
           history: 30d
           description: 'Connection status to the DB service'
@@ -269,20 +299,20 @@ zabbix_export:
                 - Undefined
                 - '2'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: ServerB
           triggers:
             - uuid: 4e0d8653959e42c8aa209270aeb28ae3
-              expression: 'last(/TR-900M API/tp.conn.serverb.constate)=1'
+              expression: 'last(/TR-900M API/tr.conn.serverb.constate)=1'
               name: 'Connection state ServerB IS FAILED'
               priority: WARNING
               description: 'Checking the connection status of Server B'
         - uuid: b7cb1d8d54ee41d9b1e6cbe31b32481a
           name: 'DB Connection state ServerB'
           type: DEPENDENT
-          key: tp.conn.serverb.dbonstate
+          key: tr.conn.serverb.dbonstate
           delay: '0'
           history: 30d
           description: 'DB service connection status to MBD'
@@ -305,50 +335,20 @@ zabbix_export:
                 - Undefined
                 - '2'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: ServerB
           triggers:
             - uuid: 61c26a59654346db9649cddf80f152db
-              expression: 'last(/TR-900M API/tp.conn.serverb.dbonstate)=1'
+              expression: 'last(/TR-900M API/tr.conn.serverb.dbonstate)=1'
               name: 'DB Connection state ServerB  IS FAILED'
               priority: WARNING
               description: 'Checking the DB connection status for Server B'
-        - uuid: fbbfd5fddb304fc4b8fa118dbe8f4f5d
-          name: 'HardKey state ServerB'
-          type: DEPENDENT
-          key: tp.conn.serverb.hdkey.state
-          delay: '0'
-          history: 30d
-          description: 'The status of the physical key for the DB service'
-          valuemap:
-            name: 'Common state'
-          preprocessing:
-            - type: JSONPATH
-              parameters:
-                - $.ConnectionState.ServerB.HardKeyState
-            - type: STR_REPLACE
-              parameters:
-                - Ok
-                - '1'
-            - type: STR_REPLACE
-              parameters:
-                - Fail
-                - '0'
-            - type: STR_REPLACE
-              parameters:
-                - Undefined
-                - '2'
-          master_item:
-            key: tp.system.status
-          tags:
-            - tag: component
-              value: ServerB
         - uuid: 46643df140f54822a7cdba4b0c9e64bb
           name: 'Redundancy state ServerB'
           type: DEPENDENT
-          key: tp.conn.serverb.redundancy.state
+          key: tr.conn.serverb.redundancy.state
           delay: '0'
           history: 30d
           description: 'Redundancy status'
@@ -379,20 +379,20 @@ zabbix_export:
                 - Undefined
                 - '4'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: ServerB
           triggers:
             - uuid: 54e1520e573d445f9e665a131a879357
-              expression: 'last(/TR-900M API/tp.conn.serverb.redundancy.state)<>{$REDU_STATUS_SB}'
+              expression: 'last(/TR-900M API/tr.conn.serverb.redundancy.state)<>{$REDU_STATUS_SB}'
               name: 'Redundancy state ServerB IS WRONG'
               priority: WARNING
               description: 'Redundancy status for ServerB'
         - uuid: ce3efb6d88af40c8980478a3063b2110
           name: 'FM1 Pilot-tone status'
           type: DEPENDENT
-          key: tp.fmtuner.pilottone1
+          key: tr.fmtuner.pilottone1
           delay: '0'
           history: 30d
           description: 'The presence of a pilot tone in channel 1 of the FM tuner'
@@ -411,20 +411,20 @@ zabbix_export:
                 - 'false'
                 - '0'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: FMTuner
           triggers:
             - uuid: e842afaaaab4480fa62a1b14ef12e72d
-              expression: 'last(/TR-900M API/tp.fmtuner.pilottone1)=0'
+              expression: 'last(/TR-900M API/tr.fmtuner.pilottone1)=0'
               name: 'FM1 Pilot-tone status IS FALSE'
               priority: WARNING
               description: 'Checking the status of the Pilot-tone 1 channel FM receiver'
         - uuid: cf6f1a7c16d94439aa9961e39eb1980e
           name: 'FM2 Pilot-tone status'
           type: DEPENDENT
-          key: tp.fmtuner.pilottone2
+          key: tr.fmtuner.pilottone2
           delay: '0'
           history: 30d
           description: 'The presence of a pilot tone in channel 1 of the FM tuner'
@@ -443,20 +443,20 @@ zabbix_export:
                 - 'false'
                 - '0'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: FMTuner
           triggers:
             - uuid: 3aed80d78fe94ebdacc760397889a664
-              expression: 'last(/TR-900M API/tp.fmtuner.pilottone2)=0'
+              expression: 'last(/TR-900M API/tr.fmtuner.pilottone2)=0'
               name: 'FM2 Pilot-tone status IS FALSE'
               priority: WARNING
               description: 'Checking the status of the Pilot-tone 2 channel FM receiver'
         - uuid: 9ee17482998d4bfb9f19ae9bf45cb678
           name: 'License for AP Leonto'
           type: DEPENDENT
-          key: tp.licences.apleonto
+          key: tr.licences.apleonto
           delay: '0'
           history: 30d
           description: 'License for Audio Processing Leonto'
@@ -479,14 +479,14 @@ zabbix_export:
                 - Undefined
                 - '2'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: License
         - uuid: 66a7ab9d641f49d39027e7bff18cb6b8
           name: 'License for Int.Stream Receive'
           type: DEPENDENT
-          key: tp.licences.isreciver
+          key: tr.licences.isreciver
           delay: '0'
           history: 30d
           description: 'Availability of an Internet Stream Receive license'
@@ -509,14 +509,14 @@ zabbix_export:
                 - Undefined
                 - '2'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: License
         - uuid: 135fb1a48ee34ba0a713f739ac8d8cb3
           name: 'License for Int.Stream Transmit'
           type: DEPENDENT
-          key: tp.licences.istransmit
+          key: tr.licences.istransmit
           delay: '0'
           history: 30d
           description: 'Availability of an Internet Stream Transmit license'
@@ -539,14 +539,14 @@ zabbix_export:
                 - Undefined
                 - '2'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: License
         - uuid: b6284878bca0494f860dfc6dd460a2ae
           name: 'License for Retransmission'
           type: DEPENDENT
-          key: tp.licences.retransmission
+          key: tr.licences.retransmission
           delay: '0'
           history: 30d
           description: 'Availability of an Retransmission the license'
@@ -569,14 +569,14 @@ zabbix_export:
                 - Undefined
                 - '2'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: License
         - uuid: c700d781766b4a8fa81bae5d912aba83
           name: 'MPX signal level'
           type: DEPENDENT
-          key: tp.mpxstate.level
+          key: tr.mpxstate.level
           delay: '0'
           value_type: FLOAT
           units: dBFS
@@ -589,14 +589,14 @@ zabbix_export:
               parameters:
                 - 'return (Math.trunc(value* 100) / 100);'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: MPX
         - uuid: 410b22ba966e4e4b9f29c3062e172ecb
           name: 'Player status mode'
           type: DEPENDENT
-          key: tp.player.mode
+          key: tr.player.mode
           delay: '0'
           history: 30d
           description: 'Active player mode'
@@ -619,20 +619,20 @@ zabbix_export:
                 - Manual
                 - '2'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: Player
           triggers:
             - uuid: 2ddfc1a62f0c487f91ca4cb9bc0ccf6d
-              expression: 'last(/TR-900M API/tp.player.mode)<>{$PLAYERMODE_STATE}'
+              expression: 'last(/TR-900M API/tr.player.mode)<>{$PLAYERMODE_STATE}'
               name: 'Player status mode IS WRONG'
               priority: AVERAGE
               description: 'Checking the player''s status for a match with the {$PLAYERMODE_STATE} macro'
         - uuid: d4142751214a46ecbef0d334b360e0f8
           name: 'Player status isPlaing'
           type: DEPENDENT
-          key: tp.player.state
+          key: tr.player.state
           delay: '0'
           history: 30d
           description: 'Player status'
@@ -651,20 +651,20 @@ zabbix_export:
                 - 'false'
                 - '0'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: Player
           triggers:
             - uuid: 65005e9b143e4c76a3f98c88add7c79f
-              expression: 'last(/TR-900M API/tp.player.state)=0'
+              expression: 'last(/TR-900M API/tr.player.state)=0'
               name: 'Player status isPlaing IS FALSE'
               priority: AVERAGE
               description: 'Checking the isPlaying status for the player'
         - uuid: 88739d6b1bdd4837aa8a566808e5ad53
           name: 'Last disk cleanup'
           type: DEPENDENT
-          key: tp.service.cleanup
+          key: tr.service.cleanup
           delay: '0'
           history: 30d
           trends: '0'
@@ -675,14 +675,14 @@ zabbix_export:
               parameters:
                 - $.ServiceState.LastCleanupDiskTime
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: health
         - uuid: 4d53316c27f94bbc92020f86beafdbc1
           name: 'Scheduler state today autobloks'
           type: DEPENDENT
-          key: tp.sheduler.toautobloks
+          key: tr.sheduler.toautobloks
           delay: '0'
           history: 30d
           description: 'Availability of autoblocks in the current day'
@@ -701,14 +701,20 @@ zabbix_export:
                 - 'false'
                 - '0'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: Sсheduler
+          triggers:
+            - uuid: 27ed0b86b2ae4c4f992508cd2c873677
+              expression: 'last(/TR-900M API/tr.sheduler.toautobloks)=1'
+              name: 'Scheduler state today autobloks IS TRUE'
+              priority: WARNING
+              description: 'The trigger for triggering the autoblock function. Filling in unavailable files using automatic selection of materials.'
         - uuid: 032e84950aed464d87e8e4b11e88a1a3
           name: 'Scheduler state tomorrow files problem'
           type: DEPENDENT
-          key: tp.sheduler.tomprobfiles
+          key: tr.sheduler.tomprobfiles
           delay: '0'
           history: 30d
           units: files
@@ -718,14 +724,14 @@ zabbix_export:
               parameters:
                 - $.ScheduleState.TomorrowFileErrors
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: Sсheduler
         - uuid: 273ea75011d647a79db84563693146d4
           name: 'Scheduler state today files problem'
           type: DEPENDENT
-          key: tp.sheduler.toprobfiles
+          key: tr.sheduler.toprobfiles
           delay: '0'
           history: 30d
           units: files
@@ -735,14 +741,14 @@ zabbix_export:
               parameters:
                 - $.ScheduleState.TodayFileErrors
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: Sсheduler
         - uuid: 7a4e725ded8343cb9b82d7d95ee749ba
           name: 'CPU Load %'
           type: DEPENDENT
-          key: tp.system.cpu.load
+          key: tr.system.cpu.load
           delay: '0'
           history: 30d
           value_type: FLOAT
@@ -753,14 +759,14 @@ zabbix_export:
               parameters:
                 - $.Tr900Params.CpuLoad
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: CPU
         - uuid: 330efe4a51ee4821bcc0596563fd22d4
           name: 'CPU Load state'
           type: DEPENDENT
-          key: tp.system.cpu.state
+          key: tr.system.cpu.state
           delay: '0'
           history: 30d
           description: 'CPU status'
@@ -779,7 +785,7 @@ zabbix_export:
                 - Overload
                 - '1'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: CPU
@@ -787,14 +793,14 @@ zabbix_export:
               value: health
           triggers:
             - uuid: c799627e1fda4e799c9525e03d6d3324
-              expression: 'last(/TR-900M API/tp.system.cpu.state,#5)=1'
+              expression: 'last(/TR-900M API/tr.system.cpu.state,#5)=1'
               name: 'CPU Load state IS OVERLOAD last 5 times'
               priority: AVERAGE
               description: 'Checking the CPU load status over the last 5 measurements in order to reduce false positives'
         - uuid: 938f0e5e5aea4bb9b20ade9cd66c64df
           name: 'CPU temperature'
           type: DEPENDENT
-          key: tp.system.cpu.temp
+          key: tr.system.cpu.temp
           delay: '0'
           history: 30d
           value_type: FLOAT
@@ -805,23 +811,23 @@ zabbix_export:
               parameters:
                 - $.Tr900Params.CpuTemp
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: CPU
           triggers:
             - uuid: 607d86d089ae4b40b647387cfec40926
-              expression: 'last(/TR-900M API/tp.system.cpu.temp,#5)>{$TR_TEMP_CRIT_CPU}'
+              expression: 'last(/TR-900M API/tr.system.cpu.temp,#5)>{$TR_TEMP_CRIT_CPU}'
               name: 'CPU temperature is higher then {$TR_TEMP_CRIT_CPU}'
               priority: AVERAGE
             - uuid: ea40f5f3d666440c9596be698ec33ef4
-              expression: 'last(/TR-900M API/tp.system.cpu.temp,#5)>{$TR_TEMP_WARN_CPU}'
+              expression: 'last(/TR-900M API/tr.system.cpu.temp,#5)>{$TR_TEMP_WARN_CPU}'
               name: 'CPU temperature is higher then {$TR_TEMP_WARN_CPU}'
               priority: WARNING
         - uuid: a6ceccab5ba84fcab8f8795d9e380940
           name: 'CPU Temp state'
           type: DEPENDENT
-          key: tp.system.cpu.temp.state
+          key: tr.system.cpu.temp.state
           delay: '0'
           history: 30d
           description: 'CPU temperature status'
@@ -840,7 +846,7 @@ zabbix_export:
                 - Overload
                 - '1'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: CPU
@@ -848,14 +854,14 @@ zabbix_export:
               value: health
           triggers:
             - uuid: a81f85fb98074ea99a11f48ee179ba5f
-              expression: 'last(/TR-900M API/tp.system.cpu.temp.state)=1'
+              expression: 'last(/TR-900M API/tr.system.cpu.temp.state)=1'
               name: 'CPU Temp state IS OVERHEATING'
               priority: HIGH
               description: 'Checking the processor temperature status. Triggered when 110 degrees Celsius is exceeded'
         - uuid: 8f9b48f89f534f9cac1e525b0f2e9b56
           name: 'FM processing preset name'
           type: DEPENDENT
-          key: tp.system.fmpreset.name
+          key: tr.system.fmpreset.name
           delay: '0'
           history: 30d
           trends: '0'
@@ -866,20 +872,20 @@ zabbix_export:
               parameters:
                 - $.AudioProcState.PresetName
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: 'FM Processing'
           triggers:
             - uuid: 6af886c83bcb4e76b53c5e0f4ef796ac
-              expression: 'last(/TR-900M API/tp.system.fmpreset.name)<>{$FMPRESET_NAME}'
+              expression: 'last(/TR-900M API/tr.system.fmpreset.name)<>{$FMPRESET_NAME}'
               name: 'FM processing preset name IS WRONG'
               priority: INFO
               description: 'Checking the correctness of the preset used for FM processing'
         - uuid: 59855209415147a0acedc140770dc40f
           name: 'FM processing operation state'
           type: DEPENDENT
-          key: tp.system.fmproc.state
+          key: tr.system.fmproc.state
           delay: '0'
           history: 30d
           description: 'FM processing operation state'
@@ -898,20 +904,20 @@ zabbix_export:
                 - 'false'
                 - '0'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: 'FM Processing'
           triggers:
             - uuid: e12b658a88a345578a470817cf41f7ad
-              expression: 'last(/TR-900M API/tp.system.fmproc.state)=0'
+              expression: 'last(/TR-900M API/tr.system.fmproc.state)=0'
               name: 'FM processing operation state IS FALSE'
               priority: WARNING
               description: 'Checking the operation status of FM Processing'
         - uuid: 2e93d36d4fab44ffa7f7794bd602ce7b
           name: 'General condition'
           type: DEPENDENT
-          key: tp.system.general.state
+          key: tr.system.general.state
           delay: '0'
           history: 30d
           description: 'General condition of the system'
@@ -934,20 +940,20 @@ zabbix_export:
                 - Undefined
                 - '2'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: health
           triggers:
             - uuid: 0dd286d837a84b70911e877426a0b782
-              expression: 'last(/TR-900M API/tp.system.general.state)=1'
+              expression: 'last(/TR-900M API/tr.system.general.state)=1'
               name: 'General condition IS FAIL'
               priority: AVERAGE
               description: 'Checking the overall health of the system'
         - uuid: b941da87d9ed41559b33bfdbe425230a
           name: 'GPU temperature'
           type: DEPENDENT
-          key: tp.system.gpu.temp
+          key: tr.system.gpu.temp
           delay: '0'
           history: 30d
           value_type: FLOAT
@@ -958,23 +964,23 @@ zabbix_export:
               parameters:
                 - $.Tr900Params.GpuTemp
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: GPU
           triggers:
             - uuid: a71b8c4dbadc4790b0077b113c081140
-              expression: 'last(/TR-900M API/tp.system.gpu.temp,#5)>{$TR_TEMP_CRIT_GPU}'
+              expression: 'last(/TR-900M API/tr.system.gpu.temp,#5)>{$TR_TEMP_CRIT_GPU}'
               name: 'GPU temperature is higher then {$TR_TEMP_CRIT_GPU}'
               priority: AVERAGE
             - uuid: 4ef077e969f64a7c9906925ae04ca103
-              expression: 'last(/TR-900M API/tp.system.gpu.temp,#5)>{$TR_TEMP_WARN_CPU}'
+              expression: 'last(/TR-900M API/tr.system.gpu.temp,#5)>{$TR_TEMP_WARN_CPU}'
               name: 'GPU temperature is higher then {$TR_TEMP_WARN_GPU}'
               priority: WARNING
         - uuid: 09900052e6c64d94b85b50b5abe922dd
           name: 'GPU Temp state'
           type: DEPENDENT
-          key: tp.system.gpu.temp.state
+          key: tr.system.gpu.temp.state
           delay: '0'
           history: 30d
           description: 'GPU temperature status'
@@ -993,7 +999,7 @@ zabbix_export:
                 - Overload
                 - '1'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: GPU
@@ -1001,14 +1007,14 @@ zabbix_export:
               value: health
           triggers:
             - uuid: 6805ea971887495cac149f4df36225a5
-              expression: 'last(/TR-900M API/tp.system.gpu.temp.state)=1'
+              expression: 'last(/TR-900M API/tr.system.gpu.temp.state)=1'
               name: 'GPU Temp state IS OVERHEATING'
               priority: AVERAGE
               description: 'Checking the GPU temperature status. Triggered when 110 degrees Celsius is exceeded'
         - uuid: b0acfb0a1c494257b3071d7b71e56394
           name: 'RAM Load %'
           type: DEPENDENT
-          key: tp.system.ram.load
+          key: tr.system.ram.load
           delay: '0'
           history: 30d
           value_type: FLOAT
@@ -1019,14 +1025,20 @@ zabbix_export:
               parameters:
                 - $.Tr900Params.RamLoad
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: RAM
+          triggers:
+            - uuid: 5168fa0acc6446fd9fcbc10ecc709d5d
+              expression: 'min(/TR-900M API/tr.system.ram.load,5m)>{$TR_MEMORY_UTIL_MAX}'
+              name: 'High memory utilization'
+              event_name: 'High memory utilization (>{$TR_MEMORY_UTIL_MAX}% for 5m)'
+              priority: AVERAGE
         - uuid: 4f1c06a083e745b5be59ced51ff7ddb9
           name: 'RAM Load state'
           type: DEPENDENT
-          key: tp.system.ram.load.state
+          key: tr.system.ram.load.state
           delay: '0'
           history: 30d
           description: 'RAM load status'
@@ -1045,7 +1057,7 @@ zabbix_export:
                 - HighLoading
                 - '1'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: health
@@ -1053,14 +1065,14 @@ zabbix_export:
               value: RAM
           triggers:
             - uuid: 5a4da5c4e6c547cc9f476798d60cc983
-              expression: 'last(/TR-900M API/tp.system.ram.load.state,#5)=1'
+              expression: 'last(/TR-900M API/tr.system.ram.load.state,#5)=1'
               name: 'RAM Load state IS HIGHLOADING last 5 times'
               priority: WARNING
               description: 'Checking the state of RAM congestion over the last 5 measurements in order to reduce false positives'
         - uuid: bd3a9ae363a54a2090215908cfd59ef2
           name: 'Root volume capacity %'
           type: DEPENDENT
-          key: tp.system.root.capa
+          key: tr.system.root.capa
           delay: '0'
           history: 30d
           value_type: FLOAT
@@ -1071,23 +1083,23 @@ zabbix_export:
               parameters:
                 - $.Tr900Params.SystemStorageLoad
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: Volume
           triggers:
             - uuid: 8e48ee52a69144918457d15a8a13f676
-              expression: 'last(/TR-900M API/tp.system.root.capa)>={$TR_ROOT_CAP_CRIT}'
+              expression: 'last(/TR-900M API/tr.system.root.capa)>={$TR_ROOT_CAP_CRIT}'
               name: 'Root volume capacity is higher then {$TR_ROOT_CAP_CRIT}'
               priority: AVERAGE
             - uuid: 36c5edc7a7e1497eb28dc4f1d0cd1635
-              expression: 'last(/TR-900M API/tp.system.root.capa)>={$TR_ROOT_CAP_WARN}'
+              expression: 'last(/TR-900M API/tr.system.root.capa)>={$TR_ROOT_CAP_WARN}'
               name: 'Root volume capacity is higher then {$TR_ROOT_CAP_WARN}'
               priority: WARNING
         - uuid: 11f2c39d3cf04293a4e103c19d7cbd14
           name: 'Root volume capacity state'
           type: DEPENDENT
-          key: tp.system.root.capa.state
+          key: tr.system.root.capa.state
           delay: '0'
           history: 30d
           description: 'Root volume capacity status'
@@ -1106,7 +1118,7 @@ zabbix_export:
                 - HighLoading
                 - '1'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: health
@@ -1114,14 +1126,14 @@ zabbix_export:
               value: Volume
           triggers:
             - uuid: 5ec7e5cca4b7450e921eda63100cb22a
-              expression: 'last(/TR-900M API/tp.system.root.capa.state)=1'
+              expression: 'last(/TR-900M API/tr.system.root.capa.state)=1'
               name: 'Root volume capacity state IS HighLoading'
               priority: WARNING
               description: 'Checking the fullness status of the root volume (/)'
         - uuid: 995037be006a41668172f34732179712
           name: 'SSD capacity %'
           type: DEPENDENT
-          key: tp.system.ssd.capa
+          key: tr.system.ssd.capa
           delay: '0'
           history: 30d
           value_type: FLOAT
@@ -1132,23 +1144,23 @@ zabbix_export:
               parameters:
                 - $.Tr900Params.SsdLoad
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: SSD
           triggers:
             - uuid: 9a25b9d834b8453284adcc3cceb350fd
-              expression: 'last(/TR-900M API/tp.system.ssd.capa)>={$TR_SSD_CAP_CRIT}'
+              expression: 'last(/TR-900M API/tr.system.ssd.capa)>={$TR_SSD_CAP_CRIT}'
               name: 'SSD capacity is highest then {$TR_SSD_CAP_CRIT}'
               priority: AVERAGE
             - uuid: e3df9576aaa64b6ca8b5b21e9ae9a588
-              expression: 'last(/TR-900M API/tp.system.ssd.capa)>={$TR_SSD_CAP_WARN}'
+              expression: 'last(/TR-900M API/tr.system.ssd.capa)>={$TR_SSD_CAP_WARN}'
               name: 'SSD capacity is highest then {$TR_SSD_CAP_WARN}'
               priority: WARNING
         - uuid: d3c857f9b026408c8d9a270fdfb466c0
           name: 'SSD capacity state'
           type: DEPENDENT
-          key: tp.system.ssd.capa.state
+          key: tr.system.ssd.capa.state
           delay: '0'
           history: 30d
           description: 'SSD capacity status'
@@ -1167,7 +1179,7 @@ zabbix_export:
                 - Overload
                 - '1'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: health
@@ -1175,32 +1187,32 @@ zabbix_export:
               value: SSD
           triggers:
             - uuid: e1b8d73069db402e9f457d6c615cd560
-              expression: 'last(/TR-900M API/tp.system.ssd.capa.state)=1'
+              expression: 'last(/TR-900M API/tr.system.ssd.capa.state)=1'
               name: 'SSD capacity state IS HighLoading'
               priority: WARNING
               description: 'Checking the SSD occupancy status'
         - uuid: a3773cbc24274884b2087d9fb2b1e3b9
           name: 'Get system status'
           type: HTTP_AGENT
-          key: tp.system.status
+          key: tr.system.status
           history: '0'
           trends: '0'
           value_type: TEXT
-          description: 'Getting RAW json system status dat'
+          description: 'Getting RAW json system status data'
           url: 'http://{HOST.IP}:{$API_PORT}/api/server/self_status'
           tags:
             - tag: component
               value: RAW
           triggers:
             - uuid: 66c5a52470994d28850391ba3c18994b
-              expression: 'nodata(/TR-900M API/tp.system.status,5m)=1'
+              expression: 'nodata(/TR-900M API/tr.system.status,5m)=1'
               name: 'Get system status NO DATA 5m'
               priority: WARNING
               description: 'Verifying data receipt'
         - uuid: 4fccff1e02d64d47aa85789eca8de609
           name: 'SWAP capacity %'
           type: DEPENDENT
-          key: tp.system.swap.capa
+          key: tr.system.swap.capa
           delay: '0'
           history: 30d
           value_type: FLOAT
@@ -1211,17 +1223,23 @@ zabbix_export:
               parameters:
                 - $.Tr900Params.SwapLoad
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: SWAP
+          triggers:
+            - uuid: 48310f6067e341a6ba4a2c266c2471cf
+              expression: 'max(/TR-900M API/tr.system.swap.capa,5m)<{$TR_SWAP_PFREE_MIN_WARN}'
+              name: 'High swap space usage'
+              event_name: 'High swap space usage (less than {$TR_SWAP_PFREE_MIN_WARN}% free)'
+              priority: WARNING
         - uuid: 174f7bdeebaa4a688feb1cfd917a94df
           name: 'SWAP capacity state'
           type: DEPENDENT
-          key: tp.system.swap.capa.state
+          key: tr.system.swap.capa.state
           delay: '0'
           history: 30d
-          description: 'SWAPcapacity status'
+          description: 'Swap capacity status'
           valuemap:
             name: 'Load state'
           preprocessing:
@@ -1237,7 +1255,7 @@ zabbix_export:
                 - HighLoading
                 - '1'
           master_item:
-            key: tp.system.status
+            key: tr.system.status
           tags:
             - tag: component
               value: health
@@ -1245,7 +1263,7 @@ zabbix_export:
               value: SWAP
           triggers:
             - uuid: df7f8e07bfa04392810d4093f9f48b64
-              expression: 'last(/TR-900M API/tp.system.swap.capa.state)=1'
+              expression: 'last(/TR-900M API/tr.system.swap.capa.state)=1'
               name: 'SWAP capacity state IS HighLoading'
               priority: WARNING
               description: 'Checking the status of SWAP occupancy'
@@ -1270,6 +1288,8 @@ zabbix_export:
         - macro: '{$REDU_STATUS_SB}'
           value: '1'
           description: 'Expected redundancy status for ServerB (Active)'
+        - macro: '{$TR_MEMORY_UTIL_MAX}'
+          value: '90'
         - macro: '{$TR_ROOT_CAP_CRIT}'
           value: '90'
         - macro: '{$TR_ROOT_CAP_WARN}'
@@ -1278,6 +1298,8 @@ zabbix_export:
           value: '90'
         - macro: '{$TR_SSD_CAP_WARN}'
           value: '80'
+        - macro: '{$TR_SWAP_PFREE_MIN_WARN}'
+          value: '50'
         - macro: '{$TR_TEMP_CRIT_CPU}'
           value: '70'
         - macro: '{$TR_TEMP_CRIT_GPU}'
