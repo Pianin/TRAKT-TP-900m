@@ -1,6 +1,6 @@
 zabbix_export:
   version: '6.0'
-  date: '2025-07-20T18:44:53Z'
+  date: '2025-07-20T19:07:55Z'
   groups:
     - uuid: eb3dfc43ee4345a6b8f93bffd6172bf1
       name: 'Broadcast FM'
@@ -1229,7 +1229,7 @@ zabbix_export:
               value: SWAP
           triggers:
             - uuid: 48310f6067e341a6ba4a2c266c2471cf
-              expression: 'max(/TR-900M API/tr.system.swap.capa,5m)<{$TR_SWAP_PFREE_MIN_WARN}'
+              expression: 'max(/TR-900M API/tr.system.swap.capa,5m)>{$TR_SWAP_PFREE_MIN_WARN}'
               name: 'High swap space usage'
               event_name: 'High swap space usage (less than {$TR_SWAP_PFREE_MIN_WARN}% free)'
               priority: WARNING

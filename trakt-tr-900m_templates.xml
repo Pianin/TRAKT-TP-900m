@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>6.0</version>
-    <date>2025-07-20T18:44:56Z</date>
+    <date>2025-07-20T19:08:28Z</date>
     <groups>
         <group>
             <uuid>eb3dfc43ee4345a6b8f93bffd6172bf1</uuid>
@@ -1999,7 +1999,7 @@
                     <triggers>
                         <trigger>
                             <uuid>48310f6067e341a6ba4a2c266c2471cf</uuid>
-                            <expression>max(/TR-900M API/tr.system.swap.capa,5m)&lt;{$TR_SWAP_PFREE_MIN_WARN}</expression>
+                            <expression>max(/TR-900M API/tr.system.swap.capa,5m)&gt;{$TR_SWAP_PFREE_MIN_WARN}</expression>
                             <name>High swap space usage</name>
                             <event_name>High swap space usage (less than {$TR_SWAP_PFREE_MIN_WARN}% free)</event_name>
                             <priority>WARNING</priority>
