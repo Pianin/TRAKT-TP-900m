@@ -29,3 +29,5 @@ Not yet. But ToDo.
 |{$TR_TEMP_WARN_CPU}|<p>The value of the temperature warning about overheating of the CPU Celsuis</p>|`50`|
 |{$TR_TEMP_CRIT_GPU}|<p>Critical value of GPU temperature Celsuis</p>|`70`|
 |{$TR_TEMP_WARN_GPU}|<p>The value of the temperature warning about overheating of the GPU Celsuis</p>|`50`|
+|{$TR_MEMORY_UTIL_MAX}|<p>This macro is used as a threshold in the memory utilization trigger.</p>|`90`|
+|{$TR_SWAP_PFREE_MIN_WARN}|<p>This macro is used as a threshold in the swap utilization trigger.</p>|`50`|
